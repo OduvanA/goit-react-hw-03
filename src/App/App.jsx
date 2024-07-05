@@ -1,8 +1,6 @@
 import ContactForm from '../ContactForm/ContactForm'
 import SearchBox from '../SearchBox/SearchBox'
 import ContactList from '../ContactList/ContactList'
-
-
 import { useState } from 'react'
 
 import './App.css'
@@ -18,19 +16,29 @@ export default function App() {
 
 
   const [contacts, setContacts] = useState(initContacts);
+  const [filter, setFilter] = useState("");
 
   const addContact = (newContact) => {
-    setContacts((existContacts) => {
-      return [...existContacts, newContact];
+    setContacts((currentContacts) => {
+      return [...currentContacts, newContact];
     });
   };
+
+  const delContact = (contactId) => {
+    setContacts((currentContacts) => {
+      return currentContacts.filter((contact) => contact.id !== contactId);
+    })
+  };
+  const fiterContact = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm onAdd={addContact} />
-      <SearchBox />
-      <ContactList contacts={contacts} />
+      <SearchBox value={filter} onSearch={setFilter } />
+      <ContactList contacts={fiterContact} onDelete={delContact} />
     </div>
 
   )
