@@ -15,7 +15,7 @@ export default function App() {
     ];
   
   const getInitialState = () => {
-    const savedContacts = localStorage.getItem("saved-feedback");
+    const savedContacts = localStorage.getItem("saved-contacts");
     return savedContacts !== null ?
       JSON.parse(savedContacts) : initContacts;
   }
